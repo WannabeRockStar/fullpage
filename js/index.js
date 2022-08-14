@@ -41,7 +41,6 @@ function createPageDots() {
 
 function pageScroll(e, type, index) {
     
-    
     if(isScrolled) return
 
     isScrolled = true
@@ -62,11 +61,9 @@ function pageScroll(e, type, index) {
         counter = index
     }
     
-
     if(counter < 0) {
         counter = 0
     }
-    
     
     if(counter === sections.length) {
         counter = sections.length - 1
