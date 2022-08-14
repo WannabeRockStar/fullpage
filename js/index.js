@@ -3,6 +3,7 @@ const dotsContainer = document.getElementById('page-dots')
 const sections = document.querySelectorAll('.section')
 let counter = 0
 let isScrolled = false
+let touchY = 0
 createPageDots()
 const dots = document.querySelectorAll('.page-dot')
 
@@ -14,11 +15,21 @@ document.addEventListener('wheel', (e) => {
     pageScroll(e, e.type)
 })
 
+document.addEventListener('touchstart', (e) => {
+    console.log(e)
+    touchY = e.changedTouches[0].pageY
+    console.log(touchY)
+})
+
+document.addEventListener('touchmove', (e) => {
+    // console.log('TOUCHED', e)
+    pageScroll(e, e.type)
+})
+
 dots.forEach((item, index) => {
     item.addEventListener('click', (e) => pageScroll(e, e.type, index))
 
 })
-
 
 function createPageDots() {
     for(let i = 0; i < sections.length; i++) {
@@ -29,7 +40,6 @@ function createPageDots() {
 
     document.querySelector('.page-dot').classList.add('active')
 }
-
 
 
 function pageScroll(e, type, index) {
@@ -47,6 +57,10 @@ function pageScroll(e, type, index) {
         counter++
     } else if(e.deltaY < 0 && type === 'wheel') {
         counter--
+    } else if(type === 'touchmove' && e.changedTouches[0].pageY < touchY) {
+        counter++
+    } else if(type === 'touchmove' && e.changedTouches[0].pageY > touchY) {
+        counter--
     } else {
         counter = index
     }
@@ -60,6 +74,8 @@ function pageScroll(e, type, index) {
     if(counter === sections.length) {
         counter = sections.length - 1
     }
+
+    // console.log(counter, 'Touched')
     dots[counter].classList.add('active')
     
     // console.log(counter, e.deltaY, window.innerHeight * counter, 'Carbon');
