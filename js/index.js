@@ -16,13 +16,10 @@ document.addEventListener('wheel', (e) => {
 })
 
 document.addEventListener('touchstart', (e) => {
-    console.log(e)
     touchY = e.changedTouches[0].pageY
-    console.log(touchY)
 })
 
 document.addEventListener('touchmove', (e) => {
-    // console.log('TOUCHED', e)
     pageScroll(e, e.type)
 })
 
